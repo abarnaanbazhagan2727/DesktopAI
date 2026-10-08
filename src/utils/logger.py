@@ -6,7 +6,7 @@ from pathlib import Path
 
 from colorama import Fore, Style, init as colorama_init
 
-from src.config import config
+from src.config import BASE_DIR, config
 
 colorama_init(autoreset=True)
 
@@ -54,11 +54,12 @@ def get_logger(level=config.LOG_LEVEL):
     if level is None:
         level = "INFO"
 
-    # Create log file path
-    log_file = f"logs/{module_name}.log"
+    # Create log file path relative to the project root
+    logs_dir = os.path.join(BASE_DIR, "logs")
+    log_file = os.path.join(logs_dir, f"{module_name}.log")
 
     # Ensure logs directory exists
-    os.makedirs("logs", exist_ok=True)
+    os.makedirs(logs_dir, exist_ok=True)
 
     formatter = ColoredFormatter(
         "[%(asctime)s] %(levelname)s [%(filename)s]: %(message)s",
@@ -70,7 +71,10 @@ def get_logger(level=config.LOG_LEVEL):
     handler.setFormatter(formatter)
 
     # Global log file handler
-    global_handler = logging.FileHandler("logs/global.log", encoding="utf-8")
+    global_handler = logging.FileHandler(
+        os.path.join(logs_dir, "global.log"),
+        encoding="utf-8",
+    )
     global_handler.setFormatter(formatter)
 
     # Console handler
