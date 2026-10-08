@@ -53,7 +53,7 @@ class TransparentOverlayQt(QMainWindow):
     def setup_ui(self):
         """Set up the user interface."""
         # Main window configuration
-        self.setWindowTitle("Jasper Assistant")
+        self.setWindowTitle(f"{config.ASSISTANT_NAME} Assistant")
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setGeometry(
@@ -210,14 +210,15 @@ class TransparentOverlayQt(QMainWindow):
 
                 elif msg_type == "response":
                     text = args[0]
-                    self.add_log_message(f"Jasper: {text}", "#00FF00")  # Green
+                    self.add_log_message(f"{config.ASSISTANT_NAME}: {text}", "#00FF00")
+ # Green
 
             except Exception as e:
                 logger.error(f"Error processing message: {e}")
 
     def start(self):
         """Start the overlay."""
-        self.update_status("Jasper Active", "lightgreen")
+        self.update_status(f"{config.ASSISTANT_NAME} Active", "lightgreen")
 
     def shutdown(self):
         """Shut down the overlay."""
@@ -241,7 +242,9 @@ def main():
 
     # Demo updating
     QTimer.singleShot(1000, lambda: overlay.update_status("Listening", "lightblue"))
-    QTimer.singleShot(2000, lambda: overlay.add_log_message("Jasper, what's the weather today?"))
+    lambda: overlay.add_log_message(
+    f"{config.ASSISTANT_NAME}, what's the weather today?"
+)
     QTimer.singleShot(3000, lambda: overlay.update_status("Processing", "yellow"))
     QTimer.singleShot(4000, lambda: overlay.update_status("Responding", "lightgreen"))
     QTimer.singleShot(
