@@ -211,7 +211,7 @@ class TransparentOverlayQt(QMainWindow):
                 elif msg_type == "response":
                     text = args[0]
                     self.add_log_message(f"{config.ASSISTANT_NAME}: {text}", "#00FF00")
- # Green
+            # Green
 
             except Exception as e:
                 logger.error(f"Error processing message: {e}")
@@ -242,9 +242,7 @@ def main():
 
     # Demo updating
     QTimer.singleShot(1000, lambda: overlay.update_status("Listening", "lightblue"))
-    lambda: overlay.add_log_message(
-    f"{config.ASSISTANT_NAME}, what's the weather today?"
-)
+    lambda: overlay.add_log_message(f"{config.ASSISTANT_NAME}, what's the weather today?")
     QTimer.singleShot(3000, lambda: overlay.update_status("Processing", "yellow"))
     QTimer.singleShot(4000, lambda: overlay.update_status("Responding", "lightgreen"))
     QTimer.singleShot(
